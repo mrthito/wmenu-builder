@@ -1,10 +1,10 @@
 <?php
 
-namespace Harimayco\Menu;
+namespace MrThito\Menu;
 
 use App\Http\Requests;
-use Harimayco\Menu\Models\Menus;
-use Harimayco\Menu\Models\MenuItems;
+use MrThito\Menu\Models\Menus;
+use MrThito\Menu\Models\MenuItems;
 use Illuminate\Support\Facades\DB;
 
 class WMenu
@@ -20,21 +20,20 @@ class WMenu
         //$roles = Role::all();
 
         if ((request()->has("action") && empty(request()->input("menu"))) || request()->input("menu") == '0') {
-            return view('wmenu::menu-html')->with("menulist" , $menulist);
+            return view('wmenu::menu-html')->with("menulist", $menulist);
         } else {
 
             $menu = Menus::find(request()->input("menu"));
             $menus = $menuitems->getall(request()->input("menu"));
 
             $data = ['menus' => $menus, 'indmenu' => $menu, 'menulist' => $menulist];
-            if( config('menu.use_roles')) {
-                $data['roles'] = DB::table(config('menu.roles_table'))->select([config('menu.roles_pk'),config('menu.roles_title_field')])->get();
+            if (config('menu.use_roles')) {
+                $data['roles'] = DB::table(config('menu.roles_table'))->select([config('menu.roles_pk'), config('menu.roles_title_field')])->get();
                 $data['role_pk'] = config('menu.roles_pk');
                 $data['role_title_field'] = config('menu.roles_title_field');
             }
             return view('wmenu::menu-html', $data);
         }
-
     }
 
     public function scripts()
@@ -76,7 +75,7 @@ class WMenu
         $menuItem = new MenuItems;
         $menu_list = $menuItem->getall($menu_id);
 
-        $roots = $menu_list->where('menu', (integer) $menu_id)->where('parent', 0);
+        $roots = $menu_list->where('menu', (int) $menu_id)->where('parent', 0);
 
         $items = self::tree($roots, $menu_list);
         return $items;
@@ -101,5 +100,4 @@ class WMenu
 
         return $data_arr;
     }
-
 }

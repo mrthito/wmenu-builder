@@ -1,14 +1,17 @@
-<?php 
-namespace Harimayco\Menu\Facades;
+<?php
+
+namespace MrThito\Menu\Facades;
+
 use Illuminate\Support\Facades\Facade;
 
-class Menu extends Facade {
+class Menu extends Facade
+{
     /**
      * Return facade accessor
      * @return string
      */
     protected static function getFacadeAccessor()
     {
-        return 'harimayco-menu';
+        return 'mrthito-menu';
     }
 }
